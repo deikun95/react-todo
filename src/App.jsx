@@ -7,7 +7,12 @@ import CardHeader from "@material-ui/core/CardHeader";
 import TodoItem from "./Components/TodoItem";
 import { default as useStyles } from "./styles";
 
+import { useStore } from './store'
+
 export default function App() {
+  const store = useStore();
+  console.log(store);
+
   const classes = useStyles();
 
   const [itemValue, setValue] = useState("");
