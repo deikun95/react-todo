@@ -7,5 +7,5 @@ class Store {
     }
 }
 
-export const storeContext = React.createContext(new Store())
-export const useStore = () => React.useContext(storeContext)
+export const storeContext = React.createContext(new Store());
+export const useStore = () => React.useContext(storeContext);

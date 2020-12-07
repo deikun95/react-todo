@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { default as useStyles } from "../styles";
+import { 
+  TodosStyes, 
+  TestItem 
+} from './TodosItem.styles';
 
 export default function App({ val, index, onRemove }) {
   const classes = useStyles();
 
-  const [itemValue, setValue] = useState(val.title);
+  const [itemValue, setValue] = useState(val.value);
   const [editMode, setEditMode] = useState(false);
 
   const btnLabel = () => {
@@ -36,9 +40,9 @@ export default function App({ val, index, onRemove }) {
       setEditMode(false);
     }
   };
-  return (
-    <div className={classes.item}>
-      <div className={classes.itemText} onClick={handleEdit}>
+  return (nyh,jfh,gjrhj
+    <TodosStyes className={classes.item} color={"green"}>
+      <TestItem className="test" onClick={handleEdit}>
         {index})&nbsp;
         {editMode ? (
           <input
@@ -50,10 +54,10 @@ export default function App({ val, index, onRemove }) {
         ) : (
           <div className={classes.itemTitle}>{itemValue}</div>
         )}
-      </div>
+      </TestItem>
       <Button color={!editMode ? "secondary" : "primary"} onClick={handleClick}>
         {btnLabel()}
       </Button>
-    </div>
+    </TodosStyes>
   );
 }

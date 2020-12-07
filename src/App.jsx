@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { observer } from 'mobx-react-lite';
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,51 +10,25 @@ import { default as useStyles } from "./styles";
 
 import { useStore } from './store'
 
-export default function App() {
-  const store = useStore();
-  console.log(store);
-
+const App = () => {
+  const { todosModule } = useStore();
+  const { todos, onEnter, nameInput, setNameInput, serverData } = todosModule;
   const classes = useStyles();
 
-  const [itemValue, setValue] = useState("");
-  const [itemArr, setItems] = useState([]);
-
-  const handleItemValue = (event) => {
-    setValue(event.target.value);
-  };
-
-  const handleEnterClick = (event) => {
-    if (event.key === "Enter" && itemValue.trim()) {
-      const newItem = {
-        id: Date.now(),
-        title: itemValue,
-      };
-      setItems((oldItems) => {
-        return [...oldItems, newItem];
-      });
-      setValue("");
-    }
-  };
-
-  const handleItemDelete = (event) => {
-    const newArr = itemArr.filter((item) => item.id !== event);
-    setItems(newArr);
-  };
-
-  const itemsList = itemArr.map((val, index) => (
+  const itemsList = todos.map((val, index) => (
     <TodoItem
       val={val}
       index={index + 1}
-      onRemove={handleItemDelete}
       key={val.id}
     />
   ));
+
 
   return (
     <Card className={classes.root}>
       <CardHeader title="React TodDo app"></CardHeader>
       <CardContent className={classes.cardContent}>
-        <div className={classes.emptyList}>{itemArr.length ? itemsList : "Список пуст"}</div>
+        <div className={classes.emptyList}>{todos.length ? itemsList : "Список пуст"}</div>
       </CardContent>
       <CardActions className={classes.CardActions}>
         <TextField
@@ -61,11 +36,15 @@ export default function App() {
           id="outlined-basic"
           label="Добавьте себе задание"
           variant="outlined"
-          value={itemValue}
-          onChange={handleItemValue}
-          onKeyDown={handleEnterClick}
+          value={nameInput}
+          onChange={(event) => setNameInput(event.target.value)}
+          onKeyDown={onEnter}
         />
       </CardActions>
+      <div>{serverData.title}</div>
     </Card>
   );
 }
+
+
+export default observer(App);
